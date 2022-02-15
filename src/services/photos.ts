@@ -11,14 +11,24 @@ export const getAll = async () => {
     const imageFolder = ref(storage, "Images");
     const listImages = await listAll(imageFolder);
 
+
     for (let i in listImages.items) {
         let photoUrl = await getDownloadURL(listImages.items[i])
 
         list.push({
             name: listImages.items[i].name,
             url: photoUrl,
+            date: Date.now()
         });
     }
+
+    list.sort((a, b) => {
+        if(a.date > b.date)    
+            return -1;
+        if(b.date > a.date)
+            return 1
+        return 0;
+    })
 
     return list;
 }

@@ -11,13 +11,20 @@ type Props = {
 
 export const PhotoItem = ({url, name, handleUpdateExclude}: Props) => {
 
-    const handleExclude = async (name: string, url: string) => {
-        let removePhoto = { name: name, url: url } as Photo;
+    const handleExclude = async (name: string, url: string) => 
+    {
         let newList = await getAll();
-        newList.splice(newList.indexOf(removePhoto),1);
-        console.log(newList);
-        handleUpdateExclude(newList);
-        removeImage(name);
+        for (const i of newList) {
+            if(i.name === name)
+            {
+                newList.splice(newList.indexOf(i),1);
+                handleUpdateExclude(newList);
+                removeImage(name);
+                return 0;
+            }
+        }
+        return new Error("Objeto inválido");
+        
     }
 
     const downloadImage = (name: string, url: string) => {

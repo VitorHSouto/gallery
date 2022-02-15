@@ -46,6 +46,7 @@ const App = () => {
     }
 
     const handlePhotoListChange = (newList: Photo[]) => {
+        console.log(newList);
         const getPhotos = async () => {
             setLoading(true);
             setPhotos(newList);
